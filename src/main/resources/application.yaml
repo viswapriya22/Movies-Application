@@ -1,6 +1,4 @@
 spring:
   data:
     mongodb:
-      user: <replace>
-      password: <replace>
-      uri: mongodb+srv://pyx-interview-cluster0.2zo55.mongodb.net/pyx-corp-interview?retryWrites=true&w=majority
+      uri: mongodb+srv://username:password@pyx-interview-cluster0.2zo55.mongodb.net/interview?ssl=true&retryWrites=true&w=majority&authMechanism=SCRAM-SHA-1
