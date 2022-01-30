@@ -1,5 +1,4 @@
 # movie-metadata-service
-`Clone this respository, do not fork`
 
 ### Description
 A misguided venture to restore VideoKing Superstore to its former glory is launching soon. They need to build a web-service on the backend to support searching and retrieving data relating to the movies it has available in its catalogue.
