@@ -18,7 +18,7 @@ A misguided venture to restore VideoKing Superstore to its former glory is launc
   ` * Bonus points for supporting this feature`
 
 ### Constraints
-*	Using Spring Boot, Log4j2, Jackson, MongoDB, OpenFeign, Gradle, JDK 11 (specifically)
+*	Using Spring Boot, Log4j2, Jackson, MongoDB, Gradle, JDK 11 (specifically)
 *	Create unit tests using Junit 5
 *	Showcase clean coding skillset (SOLID principles, etc)
 
