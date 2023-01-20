@@ -23,7 +23,16 @@ These instructions will get you a copy of the project up and running on your loc
 ### Running the Application
 1. Start MongoDB.
 2. Run `gradle bootRun` in the root directory of the project.
-2. The application will start on `http://localhost:8080/`
+3. The application will start on `http://localhost:8080/`
+
+### Test Files
+
+The project includes the following sample files for test cases:
+1. **MovieControllerTest** - A JUnit test class that tests the functionality of the MovieController class.
+2. **MovieServiceImplTest** - A JUnit test class that tests the functionality of the MovieServiceImpl class. 
+3. **WordUtilsTest** - A JUnit test class that tests the functionality of the WordUtils class. 
+
+These sample test files can be found in the /test directory of the project.You can run test files from within an IDE like IntelliJ or Eclipse. Right-click on the test file you want to run and select `Run as JUnit Test`.
 
 ## Service Class
 The service class, MovieServiceImpl, contains methods for searching movies by year, title, cast members and decade. The class also contains a method for creating a new movie.
