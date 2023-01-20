@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 1. Clone the repository to your local machine
-     `git clone https://github.com/username/movie-metadata-service.git`
+     `https://github.com/viswapriya22/Movies-Application.git`
 2. Import the project in your preferred IDE
 3. Create a .env file in the root directory of the project and store your MongoDB credentials as follows:
    + MONGO_USERNAME=<your_username>
