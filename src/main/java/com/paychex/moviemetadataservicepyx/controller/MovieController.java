@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/movies")
 @Log4j2
 public class MovieController {
+    private final MovieService movieService;
+
     @Autowired
-    private MovieService movieService;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @GetMapping("/year/{year}")
     public ResponseEntity<List<Movie>> findByYear(@PathVariable int year) {
@@ -70,7 +74,27 @@ public class MovieController {
             log.info("Returning movies for decade: {}", decade);
             return new ResponseEntity<>(movies, HttpStatus.OK);
         }
-
     }
 
+    @GetMapping("/all-movies")
+    public ResponseEntity<List<Movie>> findAllMovies(){
+        log.info("Fetching all available movies");
+        List<Movie> movies = movieService.getAllMoviesAvailable();
+        if(movies.isEmpty()){
+            log.info("No movies found");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            log.info("Returning all movies available");
+            return new ResponseEntity<>(movies, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+        log.info("Received request to create new movie: {}", movie);
+        Movie createdMovie = movieService.createMovie(movie);
+        log.info("Successfully created new movie: {}", createdMovie);
+        return new ResponseEntity<>(createdMovie, HttpStatus.CREATED);
+    }
 }

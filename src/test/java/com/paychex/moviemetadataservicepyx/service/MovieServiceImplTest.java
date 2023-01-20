@@ -2,6 +2,7 @@ package com.paychex.moviemetadataservicepyx.service;
 
 import com.paychex.moviemetadataservicepyx.domain.Movie;
 import com.paychex.moviemetadataservicepyx.repository.MovieRepository;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,8 +27,8 @@ class MovieServiceImplTest {
 
     @Test
     void getMoviesByYear_success() {
-        List<Movie> movies = Arrays.asList(new Movie("test movie", 2020, Arrays.asList("Patty Duke","Victor Jory")),
-                new Movie("another test", 2020, Arrays.asList("Lex Barker", "Mamie Van Doren")));
+        List<Movie> movies = Arrays.asList(new Movie("test movie", 2020, Arrays.asList("Patty Duke","Victor Jory"),"Horror"),
+                new Movie("another test", 2020, Arrays.asList("Lex Barker", "Mamie Van Doren"),"Thriller"));
         when(movieRepository.findByYear(anyInt())).thenReturn(movies);
 
         List<Movie> result = movieService.getMoviesByYear(2020);
@@ -46,7 +47,7 @@ class MovieServiceImplTest {
 
     @Test
     void getMoviesByTitle_success() {
-        List<Movie> movies = Arrays.asList(new Movie("The Avengers", 2020, Arrays.asList("Katharine Ross","Sue Lyon")));
+        List<Movie> movies = Arrays.asList(new Movie("The Avengers", 2020, Arrays.asList("Katharine Ross","Sue Lyon"),"Fantasy"));
         when(movieRepository.findByTitle(anyString())).thenReturn(movies);
 
         List<Movie> result = movieService.getMoviesByTitle("The Avengers");
@@ -63,8 +64,8 @@ class MovieServiceImplTest {
 
     @Test
     void getMoviesByCast_success(){
-        List<Movie> movies = Arrays.asList(new Movie("Wedding Bride", 2020, Arrays.asList("Patty Duke","Victor Jory")),
-                new Movie("Superman", 2020, Arrays.asList("Lex Barker", "Patty Duke")));
+        List<Movie> movies = Arrays.asList(new Movie("Wedding Bride", 2020, Arrays.asList("Patty Duke","Victor Jory"),"Sci-Fi"),
+                new Movie("Superman", 2020, Arrays.asList("Lex Barker", "Patty Duke"),"Drama"));
         when(movieRepository.findByCastContaining(anyString())).thenReturn(movies);
 
         List<Movie> result = movieService.getMoviesByCast("Patty Duke");
@@ -82,8 +83,8 @@ class MovieServiceImplTest {
 
     @Test
     void getMoviesByDecade_success() {
-        List<Movie> movies = Arrays.asList(new Movie("test movie", 2020, Arrays.asList("Patty Duke","Victor Jory")),
-                new Movie("another test", 2022, Arrays.asList("Lex Barker", "Mamie Van Doren")));
+        List<Movie> movies = Arrays.asList(new Movie("test movie", 2020, Arrays.asList("Patty Duke","Victor Jory"),"Romance"),
+                new Movie("another test", 2022, Arrays.asList("Lex Barker", "Mamie Van Doren"),"Regional"));
         when(movieRepository.findByYearBetween(anyInt(),anyInt())).thenReturn(movies);
 
         List<Movie> result = movieService.getMoviesByDecade(2020);
@@ -98,4 +99,33 @@ class MovieServiceImplTest {
         List<Movie> result = movieService.getMoviesByDecade(1901);
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    void getAllMoviesAvailable(){
+        ObjectId id1 = new ObjectId();
+        Movie movie1 = new Movie( "The Matrix", 1999, Arrays.asList("Keanu Reeves", "Laurence Fishburne"), "Sci-Fi");
+        movie1.setId(id1);
+        ObjectId id2 = new ObjectId();
+        Movie movie2 = new Movie("Jurassic park", 1993, Arrays.asList("Sam Neill", "Laura Dern"), "Adventure");
+        movie2.setId(id2);
+        List<Movie> movies = Arrays.asList(movie1, movie2);
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        List<Movie> result = movieService.getAllMoviesAvailable();
+
+        assertEquals(2,result.size());
+        assertEquals(result,movies);
+    }
+
+    @Test
+    void createMovieTest(){
+        Movie movie = new Movie("the shawshank redemption", 1994, Arrays.asList("Tim Robbins", "Morgan Freeman"), "Drama");
+        Movie expectedMovie = new Movie("The Shawshank Redemption", 1994, Arrays.asList("Tim Robbins", "Morgan Freeman"), "Drama");
+        ObjectId objectId = new ObjectId();
+        expectedMovie.setId(objectId);
+        when(movieRepository.save(movie)).thenReturn(expectedMovie);
+        Movie result = movieService.createMovie(movie);
+        assertEquals(result,expectedMovie);
+    }
+
 }

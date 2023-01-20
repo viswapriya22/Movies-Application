@@ -9,4 +9,6 @@ public interface MovieService {
         List<Movie> getMoviesByYear(int year);
         List<Movie> getMoviesByCast(String castName);
         List<Movie> getMoviesByDecade(int decadeFrom);
+        List<Movie> getAllMoviesAvailable();
+        Movie createMovie(Movie movie);
 }

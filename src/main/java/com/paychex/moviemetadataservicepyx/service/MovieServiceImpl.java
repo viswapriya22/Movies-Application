@@ -2,11 +2,11 @@ package com.paychex.moviemetadataservicepyx.service;
 
 import com.paychex.moviemetadataservicepyx.domain.Movie;
 import com.paychex.moviemetadataservicepyx.repository.MovieRepository;
-import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.paychex.moviemetadataservicepyx.utility.WordUtils;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -21,7 +21,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie>movies = movieRepository.findByYear(year);
         return movies.stream()
                 .peek(m -> {
-                    m.setTitle(WordUtils.capitalize(m.getTitle()));
+                    m.setTitle(WordUtils.capitalizeTitle(m.getTitle()));
                 })
                 .collect(Collectors.toList());
     }
@@ -30,7 +30,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieRepository.findByTitle(title);
         return movies.stream()
                 .peek(m -> {
-                    m.setTitle(WordUtils.capitalize(m.getTitle()));
+                    m.setTitle(WordUtils.capitalizeTitle(m.getTitle()));
                 })
                 .collect(Collectors.toList());
     }
@@ -39,7 +39,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieRepository.findByCastContaining(castName);
         return movies.stream()
                 .peek(m -> {
-                    m.setTitle(WordUtils.capitalize(m.getTitle()));
+                    m.setTitle(WordUtils.capitalizeTitle(m.getTitle()));
                 })
                 .collect(Collectors.toList());
     }
@@ -48,8 +48,22 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieRepository.findByYearBetween(decade, decade+9);
         return movies.stream()
                 .peek(m -> {
-                    m.setTitle(WordUtils.capitalize(m.getTitle()));
+                    m.setTitle(WordUtils.capitalizeTitle(m.getTitle()));
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<Movie> getAllMoviesAvailable() {
+        List<Movie> movies = movieRepository.findAll();
+        return movies.stream()
+                .peek(m -> {
+                    m.setTitle(WordUtils.capitalizeTitle(m.getTitle()));
+                })
+                .collect(Collectors.toList());
+    }
+
+    public Movie createMovie(Movie movie) {
+        movie.setTitle(WordUtils.capitalizeTitle(movie.getTitle()));
+        return movieRepository.save(movie);
     }
 }

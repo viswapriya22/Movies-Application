@@ -10,5 +10,6 @@ public interface MovieRepository extends MongoRepository<Movie, ObjectId> {
     List<Movie> findByTitle (String movieTitle);
     List<Movie> findByCastContaining (String castName);
     List<Movie> findByYearBetween (int decadeFrom, int decadeTo);
+    List<Movie> findAll ();
 
 }
